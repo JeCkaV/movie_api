@@ -22,3 +22,11 @@ Timestamp: Wed Apr 27 2022 17:55:50 GMT+0200 (Central European Summer Time)
 URL: /favicon.ico
 Timestamp: Wed Apr 27 2022 17:55:50 GMT+0200 (Central European Summer Time)
 
+::1 - - [27/Apr/2022:19:37:39 +0000] "GET /public/documentation HTTP/1.1" 404 159 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:37:45 +0000] "GET /public/ HTTP/1.1" 404 146 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:48:19 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:48:25 +0000] "GET /movies HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:48:33 +0000] "GET /ztg HTTP/1.1" 404 142 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:48:40 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:48:47 +0000] "GET /documentation HTTP/1.1" 200 798 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+::1 - - [27/Apr/2022:19:48:50 +0000] "GET /documentation HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
