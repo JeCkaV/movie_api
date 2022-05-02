@@ -23,31 +23,44 @@
         {
           id: 1,
           name: "Maria Manson",
+          password: 'klo788',
           email: "maria.manson@gmail.com",
+          dateOfBirth: '1980-01-02',
           favoriteMovies: [],
         },
         {
           id: 2,
           name: "Ana Smith",
+          password: 'ups88',
           email: "ana.smitt@yahoo.com",
+          dateOfBirth: '1988-02-05' , 
           favoriteMovies: ["Dudes"],
-        }
+        },
+
+        {
+            id: 3,
+            name: "Melani Cruz",
+            password: 'upsmc5588',
+            email: 'melc@yahoo.com' ,
+            dateOfBirth: '1981-09-01' , 
+            favoriteMovies: ["We are not angels"],
+          }
       ];
 
     // top 10 Serbian movies
     let movies = [
         {
-        Title: "We are not angels",
-        Description:"Angel and the devil fight for the soul of a Belgrade playboy who made a young girl pregnant.",
+        Title: 'We are not angels',
+        Description:'Angel and the devil fight for the soul of a Belgrade playboy who made a young girl pregnant.',
         Director: {
-            Name: "Srdjan Dragojevic",
-            Bio: "Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books for grown-up's and the kids. His books for kids 'Poopwille', 'Poopking' and 'Winged childhood' are among the bestsellers for the kids in Ex-Yu region. His film 'Pretty Village, Pretty Flame' is among 1000 best films of all time in Halliwells film encyclopedia and among 30 best war films in history, according to Sight&Sound critics.",
-            Birth: 1963.0
+            Name: 'Srdjan Dragojevic',
+            Bio: "Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books for grown-up' and the kids.",
+            Birth: '1963-01-01'
         },
         Stars: ["Nikola Kojo", "Milena Pavlovic", "Branka Katic", "Srdjan Zika Todorovic"],
         Genre: {
             Name: "Comedy",
-            Description: "Genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium." ,
+            Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.' ,
         },
         ImageUrl: "https://www.imdb.com/title/tt0104860/mediaviewer/rm1608639488/"
         },
@@ -57,8 +70,8 @@
         Description: 'A young member of an underground gang in Belgrade puts himself and his family in danger when he crosses a mafia leader who works for the chief of police.',
         Director: {
             Name:'Milos Avramovic',
-            Bio: 'Serbian screenwriter, producer and director.He gained knowledge and experience working as a first assistant director on feature films, feature series, numerous commercials and dedicated films for clients from Serbia and abroad. ',
-            Birth: 1978.0,
+            Bio: 'Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books. ',
+            Birth: '1978-03-23' ,
         },
         Stars: ['Milos Bikovic', 'Miodrag Radonjic', 'Dragan Bjelogrlic'],
         Genre: {
@@ -67,14 +80,15 @@
         },
         ImageUrl: 'https://www.imdb.com/title/tt5207158/mediaviewer/rm1260611840/' ,
         },
+
         {
         Title: 'Zona Zamfirova',
         Description: 'A local rich man daughter, and the vicissitudes of her affair with Mane (Vojin Cetkovic), an ordinary goldsmith. As it was undesirable for the daughter of a rich man to marry a craftsman, the two are at first divided, with the possibility of Zona marrying the son of other rich people, Manulac. Everything is, however, changed as Mane organizes a successful conspiracy to keep Zona for himself.',
         Director: {
             Name:'Zdravko Sotra',
             Bio: 'Serbian film and television director and screenwriter. Sotra graduated from the Faculty of Dramatic Arts, University of Arts in Belgrade with a degree in film directing. He began his professional career at TV Belgrade, working there since its inception.',
-            Birth: 1933.0
-        } ,
+            Birth:'1933-02-13'
+             } ,
         Stars: ['Vojin Cetkovic', 'Katarina Radivojevic', 'Dragan Nikolic', 'Milena Dravic'],
         Genre: {
             Name:'Drama',
@@ -89,7 +103,7 @@
         Director: {
             Name:'Srdjan Karanovic',
             Bio:'Serbian film director and screenwriter. He has directed 17 films since 1968. ',
-            Birth:1945.0
+            Birth: '1945-11-17'
         },
         Stars: ['Predrag Miki Manojlovic', 'Iva Krajnc', 'Radivoje Bukvic', 'Nebojsa Dugalic'],
         Genre: {
@@ -105,7 +119,7 @@
         Director: {
             Name: 'Dragan Bjelogrlic',
             Bio: 'Serbian actor, director and producer. He made his acting debut as a 15-year old in a 1978 film that achieved sizable popularity. He followed that up in the coming years with other roles in TV series, short, and feature films. By the mid-1980s, Bjelogrlic was an established young actor in SFR Yugoslavia. ',
-            Birth: 1963.0,
+            Birth: '1963-10-10',
         },
         Stars: ['Milos Bikovic', 'Petar Strugar', 'Nina Jankovic', 'Danina Jeftic'],
         Genre: {
@@ -121,7 +135,7 @@
         Director: {
             Name: 'Srdjan Dragojevic',
             Bio: 'Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books for grown-up and the kids. His books for kids "Poopwille", "Poopking" and "Winged childhood" are among the bestsellers for the kids in Ex-Yu region. His film "Pretty Village, Pretty Flame" is among 1000 best films of all time in Halliwells film encyclopedia and among 30 best war films in history, according to Sight&Sound critics.',
-            Birth: 1963.0
+            Birth: '1963-01-01' ,
         },
         Stars: ['Dusan Pekic', 'Milan Maric', 'Dragan Bjelogrlic', 'Branka Katic'],
         Genre: {
@@ -137,7 +151,7 @@
         Director: {
             Name: 'Srdjan Koljevic',
             Bio: 'Srdjan Koljevic was born in 1966 in Sarajevo, Bosnia and Herzegovina, Yugoslavia. He is known for The Woman with a Broken Nose (2010), The Red Colored Grey Truck (2004) and The Trap (2007).',
-            Birth: 1966.0
+            Birth: '1966-12-31',
         },
         Stars: ['Srdjan Zika Todorovic', 'Aleksandra Balmazovic', 'Dragan Bjelogrlic', 'Bogdan Diklic'],
         Genre: {
@@ -153,7 +167,7 @@
         Director: {
             Name: 'Radivoje Andric',
             Bio: 'A film and television director. Prior to his studies at the Faculty of Dramatic Arts, he directed the performances at the Dadov amateur theatre: "Tomb for Boris Davidovich" (Grobnica za Borisa Davidovica) by Danilo Kis and "Che - the Lasting Tragedy" (Ce-tragedija koja traje) by Dusko Radovic and Matija Beckovic. He acquired his experience over the past ten or so years working as an assistant to renowned Yugoslav directors. ',
-            Birth: 1967.0
+            Birth: '1967-07-08',
         },
         Stars: ['Boris Milivojevic', 'Sergej Trifunovic', 'Nebojsa Glogovac.'],
         Genre: {
@@ -169,12 +183,12 @@
         Director: {
             Name: 'Zdravko Sotra',
             Bio: 'Serbian film and television director and screenwriter. Sotra graduated from the Faculty of Dramatic Arts, University of Arts in Belgrade with a degree in film directing. He began his professional career at TV Belgrade, working there since its inception.',
-            Birth: 1933.0
+            Birth: '1933-02-13',
         },
         Stars: ['Dragan Mićanovic', 'Natasa Tapuskovic', 'Nikola Simic'],
         Genre: {
             Name:'Romance',
-            Description: 'xplore the essential themes of love at first sight, young (and older) love, unrequited love, obsessive love, sentimental love, spiritual love, forbidden love, sexual and passionate love, sacrificial love, explosive and destructive love, and tragic love.',
+            Description: 'Explore the essential themes of love at first sight, young (and older) love, unrequited love, obsessive love, sentimental love, spiritual love, forbidden love, sexual and passionate love, sacrificial love, explosive and destructive love, and tragic love.',
         } ,
         ImageUrl: 'https://www.imdb.com/title/tt0187231/mediaviewer/rm822877952/',
         },
@@ -185,7 +199,7 @@
         Director: {
             Name: 'Gorcin Stojanovic',
             Bio: 'Gorcin Stojanovic was born on October 19, 1966 in Sarajevo, Bosnia and Hercegovina, Yugoslavia. He is a director and producer, known for Premeditated Murder (1995), The Hornet (1998) and Tajne vinove loze (2021).',
-            Birth:1966.0
+            Birth: '1966-10-19' ,
         },
         Stars: ['Mirjana Jokovic', 'Sergej Trifunovic'],
         Genre: {
