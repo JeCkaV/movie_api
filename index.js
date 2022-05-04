@@ -21,15 +21,16 @@
 
     let users = [
         {
-          id: 1,
+          id: _1,
           name: "Maria Manson",
           password: 'klo788',
           email: "maria.manson@gmail.com",
           dateOfBirth: '1980-01-02',
           favoriteMovies: [],
         },
+        
         {
-          id: 2,
+          id: _2,
           name: "Ana Smith",
           password: 'ups88',
           email: "ana.smitt@yahoo.com",
@@ -38,12 +39,29 @@
         },
 
         {
-            id: 3,
+            id: _3,
             name: "Melani Cruz",
             password: 'upsmc5588',
             email: 'melc@yahoo.com' ,
             dateOfBirth: '1981-09-01' , 
             favoriteMovies: ["We are not angels"],
+          },
+          {
+            id = _4 ,
+            name: "Fiona Cruz",
+            password: "ups88",
+            email: 'fcruz@yahoo.com' ,
+            dateOfBirth: "1981-08-01",
+            favoriteMovies: ["The Hornet"]
+          },
+
+          {
+            id = _5 ,
+            name: "David Beckham",
+            password: "beckhampower55",
+            email: 'davidb@yahoo.com' ,
+            dateOfBirth: "1985-10-15",
+            favoriteMovies: ["Barking at the Stars"]
           }
       ];
 
@@ -54,7 +72,7 @@
         Description:'Angel and the devil fight for the soul of a Belgrade playboy who made a young girl pregnant.',
         Director: {
             Name: 'Srdjan Dragojevic',
-            Bio: "Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books for grown-up' and the kids.",
+            Bio: "Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books.",
             Birth: '1963-01-01'
         },
         Stars: ["Nikola Kojo", "Milena Pavlovic", "Branka Katic", "Srdjan Zika Todorovic"],
@@ -62,7 +80,8 @@
             Name: "Comedy",
             Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.' ,
         },
-        ImageUrl: "https://www.imdb.com/title/tt0104860/mediaviewer/rm1608639488/"
+        ImageUrl: "https://www.imdb.com/title/tt0104860/mediaviewer/rm1608639488/" ,
+        Featured: true 
         },
        
         {
@@ -70,15 +89,16 @@
         Description: 'A young member of an underground gang in Belgrade puts himself and his family in danger when he crosses a mafia leader who works for the chief of police.',
         Director: {
             Name:'Milos Avramovic',
-            Bio: 'Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books. ',
-            Birth: '1978-03-23' ,
+            Bio: 'Serbian screenwriter, producer and director.He gained knowledge and experience working as a first assistant director on feature films, feature series, numerous commercials and dedicated films for clients from Serbia and abroad.',
+            Birth: '1978-03-23' 
         },
-        Stars: ['Milos Bikovic', 'Miodrag Radonjic', 'Dragan Bjelogrlic'],
+        Stars: 'Milos Bikovic', 'Miodrag Radonjic', 'Dragan Bjelogrlic',
         Genre: {
             Name:'Crime',
-            Description: 'Crime fiction is the literary genre that fictionalises crimes, their detection, criminals and their motives.',
+            Description: 'Crime fiction is the literary genre that fictionalises crimes, their detection, criminals and their motives.'
         },
-        ImageUrl: 'https://www.imdb.com/title/tt5207158/mediaviewer/rm1260611840/' ,
+        ImageUrl: 'https://www.imdb.com/title/tt5207158/mediaviewer/rm1260611840/',
+        Featured: true
         },
 
         {
@@ -94,7 +114,8 @@
             Name:'Drama',
             Description: 'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
         },
-        ImageUrl:'https://en.wikipedia.org/wiki/Zona_Zamfirova#/media/File:Zona_Zamfirova_DVD-Cover.jpg'
+        ImageUrl:'https://en.wikipedia.org/wiki/Zona_Zamfirova#/media/File:Zona_Zamfirova_DVD-Cover.jpg',
+        Featured: true
     },
 
     {
@@ -111,6 +132,7 @@
             Description:'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
         },
         ImageUrl:'https://www.imdb.com/title/tt9170318/mediaviewer/rm2355280641/',
+        Featured: true
         },
 
         {
@@ -127,6 +149,7 @@
             Description: 'Revolves around the conquests and explorations of a protagonist. The purpose of the conquest can be to retrieve a person or treasure, but often the main focus is simply the pursuit of the unknown. These films generally take place in exotic locations and play on historical myths.',
         },
         ImageUrl: 'https://m.imdb.com/title/tt1634013/mediaviewer/rm3708354560/',
+        Featured: true
     },
 
         {
@@ -143,6 +166,7 @@
             Description: 'Films of this genre generally involve various aspects of crime and its detection. Stylistically, the genre may overlap and combine with many other genres, such as drama or gangster film, but also include comedy, and, in turn, is divided into many sub-genres, such as mystery, suspense or noir.' ,
         },
         ImageUrl: 'https://www.imdb.com/title/tt0165546/mediaviewer/rm873078528/',
+        Featured: true
     },
 
         {
@@ -159,6 +183,7 @@
             Description: 'Genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium.' ,
         },
         ImageUrl:'https://www.imdb.com/title/tt0365089/mediaviewer/rm1410080512/',
+        Featured: true
         },
 
         {
@@ -175,6 +200,7 @@
             Description: 'Genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium.',
         },
         ImageUrl: 'https://www.imdb.com/title/tt0279248/mediaviewer/rm1459151872/',
+        Featured: true
         },
 
         {
@@ -191,6 +217,7 @@
             Description: 'Explore the essential themes of love at first sight, young (and older) love, unrequited love, obsessive love, sentimental love, spiritual love, forbidden love, sexual and passionate love, sacrificial love, explosive and destructive love, and tragic love.',
         } ,
         ImageUrl: 'https://www.imdb.com/title/tt0187231/mediaviewer/rm822877952/',
+        Featured: true
         },
 
         {
@@ -207,6 +234,7 @@
             Description: 'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
         },
         ImageUrl: 'https://www.imdb.com/title/tt0147556/mediaviewer/rm1742529792/',
+        Featured: true
         },
     ];
 
