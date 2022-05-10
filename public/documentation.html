@@ -11,7 +11,7 @@
           
    <body class="container text-center">
       <h2 class="header"> Documentation API </h2>
-      <p>The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.
+      <p>The web application will provide users with access to information about different movies, directors and genres. Users will be able to sign up, update their personal information and create a list of their favorite movies.
       </p>
 
       <div class="table-responsive-sm">          
@@ -50,14 +50,13 @@
                   Title: string,
                   Description: string,
                   Genre: {
-                    name: string,
-                     description: string,
+                     username: string,
+                     Description: string,
                     },
                   Director: {
-                      Name: string,
-                      Birth: string,
-                      Death: string,
+                      username: string,
                       Bio: string,
+                      Birth: string
                     },
                       Stars: string,
                       imageURL: string,
@@ -67,18 +66,18 @@
                 </td>
                 </tr>
                  <tr>
-                 <td>Return data about a genre (description) by name/title (e.g., 'Comedy')</td>
-                 <td>/movies/genre/[genreName]</td>
+                 <td>Return data about a genre (description) by username/title (e.g., 'Comedy')</td>
+                 <td>/movies/genre/[genreusername]</td>
                  <td>GET</td>
-                 <td>:genreName</td>
+                 <td>:genreusername</td>
                  <td>None</td>
                  <td>A JSON object holding data about the selected genre. Example:
                   <pre>    
                      <code>
                           {
-                            name: 'Comedy', 
-                            description: ''
-                                  }
+                            username: 'Comedy', 
+                            Description: ''
+                          }
                         </code> 
                      </pre>    
                    </td>
@@ -93,11 +92,11 @@
                           <pre>
                               <code>
                                   id: 1,
-                                  name: "Maria Manson",
+                                  username: "Maria Manson",
                                   email: "maria.manson@gmail.com",
                                   password: "klo788",
                                   birthday: "1980-01-02",
-                                  favorites: [],
+                                  favoriteMovies: [],
                               </code>
                           </pre>
                       </td>
@@ -111,11 +110,11 @@
                           <pre>
                               <code>
                                   { 
-                                      "name": "", 
+                                      "username": "", 
                                       "email": "", 
                                       "password": ""
                                       "birthday": "", 
-                                      "favorites": []            
+                                      "favoriteMovies": []            
                                   }
                               </code>
                           </pre>
@@ -124,13 +123,13 @@
                           <td>Allow users to update their user info</td>
                           <td>/users/[username]</td>
                           <td>PUT</td>
-                          <td>:Username</td>
+                          <td>:username</td>
                           <td> A JSON object holding the new password. Ex:
                             <pre>
                               <code>
                     { 
-                      "name": "Maria Manson",
-                      "password": "0000"
+                      "username": "Maria Manson",
+                      "password": "12589mm"
                     }
                               </code>
                             </pre>
@@ -140,7 +139,7 @@
                               <code>
                     { 
                       id: '1',
-                      name: 'Maria Manson', 
+                      username: 'Maria Manson', 
                       password: "56983"
                     }
                               </code>

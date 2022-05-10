@@ -4,11 +4,11 @@ let movieSchema = mongoose.Schema({
     Title: {type: String, required: true},
     Description: {type: String, required: true},
     Genre: {
-        Name: String,
+        username: String,
         Description: String
     },
     Director: {
-        Name: String,
+        username: String,
         Bio: String,
         Birthday: Date
     },
@@ -18,7 +18,7 @@ let movieSchema = mongoose.Schema({
 });
 
 let userSchema = mongoose.Schema({
-    name: {type: String, required: true},
+    username: {type: String, required: true},
     password: {type: String, required: true},
     email: {type: String, required: true},
     birthday: Date,

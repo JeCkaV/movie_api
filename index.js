@@ -1,42 +1,46 @@
 const express = require('express');
-      bodyParser = require('body-parser');
-      uuid = require('uuid');
-
-// import built in node modules fs and path 
-const morgan = require('morgan');
-      fs = require('fs'), 
-     path = require('path');
-
-      mongoose = require('mongoose');
-      Models = require ('./models');
-
-  //mongoose models
-  const Movies = Models.Movie;
-  const Users = Models.User;
-  const Genres = Models.Genre;
-  const Directors = Models.Director;
+     
+  app.use(express.json());
+  bodyParser = require('body-parser');
+  uuid = require('uuid');
 
   const app = express();
 
-  //connection with Mongo database
-  mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({
+      extended: true
+  }));
+
+
+// import built in node modules fs and path 
+const morgan = require('morgan');
+  fs = require('fs'), 
+  path = require('path');
+
+  mongoose = require('mongoose');
+  Models = require ('./models');
+
+//mongoose models
+const Movies = Models.Movie;
+const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Director;
+
+
+
+//connection with Mongo database
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
+useNewUrlParser: true, 
+useUnifiedTopology: true,
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
- extended: true
-}));
 
- //setting up logging stream with log.txt
- const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), 
- {flags: 'a'});
+//setting up logging stream with log.txt
+const accessLogStream = fs.createWriteStream(path.join(__dirusername, 'log.txt'), 
+{flags: 'a'});
 
-  //logging with morgan
-  app.use(morgan('combined', { stream: accessLogStream }));
-
-  app.use(express.json());
+//logging with morgan
+app.use(morgan('combined', { stream: accessLogStream }));
 
 // serve static file
 app.use(express.static('public'));
@@ -46,7 +50,7 @@ app.use(express.static('public'));
     let users = [
         {
           id: _1,
-          name: "Maria Manson",
+          username: "Maria Manson",
           password: 'klo788',
           email: "maria.manson@gmail.com",
           dateOfBirth: '1980-01-02',
@@ -55,7 +59,7 @@ app.use(express.static('public'));
         
         {
           id: _2,
-          name: "Ana Smith",
+          username: "Ana Smith",
           password: 'ups88',
           email: "ana.smitt@yahoo.com",
           dateOfBirth: '1988-02-05' , 
@@ -64,7 +68,7 @@ app.use(express.static('public'));
 
         {
             id: _3,
-            name: "Melani Cruz",
+            username: "Melani Cruz",
             password: 'upsmc5588',
             email: 'melc@yahoo.com' ,
             dateOfBirth: '1981-09-01' , 
@@ -72,7 +76,7 @@ app.use(express.static('public'));
           },
           {
             id = _4 ,
-            name: "Fiona Cruz",
+            username: "Fiona Cruz",
             password: "ups88",
             email: 'fcruz@yahoo.com' ,
             dateOfBirth: "1981-08-01",
@@ -81,7 +85,7 @@ app.use(express.static('public'));
 
           {
             id = _5 ,
-            name: "David Beckham",
+            username: "David Beckham",
             password: "beckhampower55",
             email: 'davidb@yahoo.com' ,
             dateOfBirth: "1985-10-15",
@@ -95,13 +99,13 @@ app.use(express.static('public'));
         Title: 'We are not angels',
         Description:'Angel and the devil fight for the soul of a Belgrade playboy who made a young girl pregnant.',
         Director: {
-            Name: 'Srdjan Dragojevic',
+            username: 'Srdjan Dragojevic',
             Bio: "Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books.",
             Birth: '1963-01-01'
         },
         Stars: ["Nikola Kojo", "Milena Pavlovic", "Branka Katic", "Srdjan Zika Todorovic"] ,
         Genre: {
-            Name: "Comedy",
+            username: "Comedy",
             Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.' ,
         },
         ImageUrl: "https://www.imdb.com/title/tt0104860/mediaviewer/rm1608639488/" ,
@@ -112,13 +116,13 @@ app.use(express.static('public'));
         Title: 'South wind',
         Description: 'A young member of an underground gang in Belgrade puts himself and his family in danger when he crosses a mafia leader who works for the chief of police.',
         Director: {
-            Name:'Milos Avramovic',
+            username:'Milos Avramovic',
             Bio: 'Serbian screenwriter, producer and director.He gained knowledge and experience working as a first assistant director on feature films, feature series, numerous commercials and dedicated films for clients from Serbia and abroad.',
             Birth: '1978-03-23' 
         },
         Stars: [ 'Milos Bikovic', 'Miodrag Radonjic', 'Dragan Bjelogrlic'] ,
         Genre: {
-            Name:'Crime',
+            username:'Crime',
             Description: 'Crime fiction is the literary genre that fictionalises crimes, their detection, criminals and their motives.'
         },
         ImageUrl: 'https://www.imdb.com/title/tt5207158/mediaviewer/rm1260611840/',
@@ -129,13 +133,13 @@ app.use(express.static('public'));
         Title: 'Zona Zamfirova',
         Description: 'A local rich man daughter, and the vicissitudes of her affair with Mane (Vojin Cetkovic), an ordinary goldsmith. As it was undesirable for the daughter of a rich man to marry a craftsman, the two are at first divided, with the possibility of Zona marrying the son of other rich people, Manulac. Everything is, however, changed as Mane organizes a successful conspiracy to keep Zona for himself.',
         Director: {
-            Name:'Zdravko Sotra',
+            username:'Zdravko Sotra',
             Bio: 'Serbian film and television director and screenwriter. Sotra graduated from the Faculty of Dramatic Arts, University of Arts in Belgrade with a degree in film directing. He began his professional career at TV Belgrade, working there since its inception.',
             Birth:'1933-02-13'
              } ,
         Stars: ['Vojin Cetkovic', 'Katarina Radivojevic', 'Dragan Nikolic', 'Milena Dravic'] ,
         Genre: {
-            Name:'Drama',
+            username:'Drama',
             Description: 'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
         },
         ImageUrl:'https://en.wikipedia.org/wiki/Zona_Zamfirova#/media/File:Zona_Zamfirova_DVD-Cover.jpg',
@@ -146,13 +150,13 @@ app.use(express.static('public'));
         Title: 'Besa',
         Description: 'Uros Peric is a small business man from Belgrade. He kills a daughter of an Albanian mob boss in a car accident. In order to save his family, he is forced to commit crimes for the mafia.',
         Director: {
-            Name:'Srdjan Karanovic',
+            username:'Srdjan Karanovic',
             Bio:'Serbian film director and screenwriter. He has directed 17 films since 1968. ',
             Birth: '1945-11-17'
         },
         Stars: ['Predrag Miki Manojlovic', 'Iva Krajnc', 'Radivoje Bukvic', 'Nebojsa Dugalic'],
         Genre: {
-            Name:'Drama',
+            username:'Drama',
             Description:'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
         },
         ImageUrl:'https://www.imdb.com/title/tt9170318/mediaviewer/rm2355280641/',
@@ -163,13 +167,13 @@ app.use(express.static('public'));
         Title: 'Montevideo: Taste of a dream',
         Description: 'A story about one team that decides to follow a dream that takes them on a journey to the First World Football Championship in Montevideo, Uruguay in 1930. A dream that allows them to become true stars and living legends.',
         Director: {
-            Name: 'Dragan Bjelogrlic',
+            username: 'Dragan Bjelogrlic',
             Bio: 'Serbian actor, director and producer. He made his acting debut as a 15-year old in a 1978 film that achieved sizable popularity. He followed that up in the coming years with other roles in TV series, short, and feature films. By the mid-1980s, Bjelogrlic was an established young actor in SFR Yugoslavia. ',
             Birth: '1963-10-10',
         },
         Stars: ['Milos Bikovic', 'Petar Strugar', 'Nina Jankovic', 'Danina Jeftic'],
         Genre: {
-            Name:'Adventure',
+            username:'Adventure',
             Description: 'Revolves around the conquests and explorations of a protagonist. The purpose of the conquest can be to retrieve a person or treasure, but often the main focus is simply the pursuit of the unknown. These films generally take place in exotic locations and play on historical myths.',
         },
         ImageUrl: 'https://m.imdb.com/title/tt1634013/mediaviewer/rm3708354560/',
@@ -178,15 +182,15 @@ app.use(express.static('public'));
 
         {
         Title: 'The Wounds',
-        Description: 'It depicts the violent lives of two boys in Belgrade as they aspire to make names for themselves in the citys underworld. The story takes place throughout the 1990s, against the backdrop of Yugoslav Wars and growing ethnic hatred.',
+        Description: 'It depicts the violent lives of two boys in Belgrade as they aspire to make usernames for themselves in the citys underworld. The story takes place throughout the 1990s, against the backdrop of Yugoslav Wars and growing ethnic hatred.',
         Director: {
-            Name: 'Srdjan Dragojevic',
+            username: 'Srdjan Dragojevic',
             Bio: 'Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books for grown-up and the kids. His books for kids "Poopwille", "Poopking" and "Winged childhood" are among the bestsellers for the kids in Ex-Yu region. His film "Pretty Village, Pretty Flame" is among 1000 best films of all time in Halliwells film encyclopedia and among 30 best war films in history, according to Sight&Sound critics.',
             Birth: '1963-01-01' ,
         },
         Stars: ['Dusan Pekic', 'Milan Maric', 'Dragan Bjelogrlic', 'Branka Katic'],
         Genre: {
-            Name: 'Crime',
+            username: 'Crime',
             Description: 'Films of this genre generally involve various aspects of crime and its detection. Stylistically, the genre may overlap and combine with many other genres, such as drama or gangster film, but also include comedy, and, in turn, is divided into many sub-genres, such as mystery, suspense or noir.' ,
         },
         ImageUrl: 'https://www.imdb.com/title/tt0165546/mediaviewer/rm873078528/',
@@ -197,13 +201,13 @@ app.use(express.static('public'));
         Title: 'The red colored grey truck',
         Description: 'At the dawn of a civil war in Yugoslavia, a chance encounter brings together a color blind truck driver and a free-spirited city girl. Their road trip proves to be fateful.',
         Director: {
-            Name: 'Srdjan Koljevic',
+            username: 'Srdjan Koljevic',
             Bio: 'Srdjan Koljevic was born in 1966 in Sarajevo, Bosnia and Herzegovina, Yugoslavia. He is known for The Woman with a Broken Nose (2010), The Red Colored Grey Truck (2004) and The Trap (2007).',
             Birth: '1966-12-31',
         },
         Stars: ['Srdjan Zika Todorovic', 'Aleksandra Balmazovic', 'Dragan Bjelogrlic', 'Bogdan Diklic'],
         Genre: {
-            Name: 'Comedy',
+            username: 'Comedy',
             Description: 'Genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium.' ,
         },
         ImageUrl:'https://www.imdb.com/title/tt0365089/mediaviewer/rm1410080512/',
@@ -212,15 +216,15 @@ app.use(express.static('public'));
 
         {
         Title: 'Dudes',
-        Description: 'Urban comedy, happening during a night in Belgrade. Mare, Pop and Gojko are three friends who grew up together. Mare and Pop have always been musicians, while Gojko (who was harassed by them in school and nicknamed Sissy) became a guy in suit, boss of his own club and recording studio.',
+        Description: 'Urban comedy, happening during a night in Belgrade. Mare, Pop and Gojko are three friends who grew up together. Mare and Pop have always been musicians, while Gojko (who was harassed by them in school and nickusernamed Sissy) became a guy in suit, boss of his own club and recording studio.',
         Director: {
-            Name: 'Radivoje Andric',
+            username: 'Radivoje Andric',
             Bio: 'A film and television director. Prior to his studies at the Faculty of Dramatic Arts, he directed the performances at the Dadov amateur theatre: "Tomb for Boris Davidovich" (Grobnica za Borisa Davidovica) by Danilo Kis and "Che - the Lasting Tragedy" (Ce-tragedija koja traje) by Dusko Radovic and Matija Beckovic. He acquired his experience over the past ten or so years working as an assistant to renowned Yugoslav directors. ',
             Birth: '1967-07-08',
         },
         Stars: ['Boris Milivojevic', 'Sergej Trifunovic', 'Nebojsa Glogovac.'],
         Genre: {
-            Name: 'Comedy',
+            username: 'Comedy',
             Description: 'Genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter, especially in theatre, film, stand-up comedy, television, radio, books, or any other entertainment medium.',
         },
         ImageUrl: 'https://www.imdb.com/title/tt0279248/mediaviewer/rm1459151872/',
@@ -231,13 +235,13 @@ app.use(express.static('public'));
         Title: 'Barking at the Stars',
         Description: 'Comedy about teachers and students at a high school in a small provincial town. Mihailo tries to win the heart of a girl his brother is also chasing.',
         Director: {
-            Name: 'Zdravko Sotra',
+            username: 'Zdravko Sotra',
             Bio: 'Serbian film and television director and screenwriter. Sotra graduated from the Faculty of Dramatic Arts, University of Arts in Belgrade with a degree in film directing. He began his professional career at TV Belgrade, working there since its inception.',
             Birth: '1933-02-13',
         },
         Stars: ['Dragan Mićanovic', 'Natasa Tapuskovic', 'Nikola Simic'],
         Genre: {
-            Name:'Romance',
+            username:'Romance',
             Description: 'Explore the essential themes of love at first sight, young (and older) love, unrequited love, obsessive love, sentimental love, spiritual love, forbidden love, sexual and passionate love, sacrificial love, explosive and destructive love, and tragic love.',
         } ,
         ImageUrl: 'https://www.imdb.com/title/tt0187231/mediaviewer/rm822877952/',
@@ -248,13 +252,13 @@ app.use(express.static('public'));
         Title: 'The Hornet',
         Description: 'A noir love story between a Serbian girl and a mysterious young Albanian, set against the backdrop of the recent Balkan conflicts.',
         Director: {
-            Name: 'Gorcin Stojanovic',
+            username: 'Gorcin Stojanovic',
             Bio: 'Gorcin Stojanovic was born on October 19, 1966 in Sarajevo, Bosnia and Hercegovina, Yugoslavia. He is a director and producer, known for Premeditated Murder (1995), The Hornet (1998) and Tajne vinove loze (2021).',
             Birth: '1966-10-19' ,
         },
        
         Genre: {
-            Name: 'Drama',
+            username: 'Drama',
             Description: 'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
         },
         ImageUrl: 'https://www.imdb.com/title/tt0147556/mediaviewer/rm1742529792/',
@@ -266,13 +270,13 @@ app.use(express.static('public'));
 
     //Allow new user creation with post method
     app.post ('/users', (req, res) => {
-       Users.findOne({ name: req.body.name })
+       Users.findOne({ username: req.body.username })
        .then ((user) => {
            if (user) {
-               return res.status(400).send(req.body.name + ' already exists.');
+               return res.status(400).send(req.body.username + ' already exists.');
         } else {
             Users.create({
-               name: req.body.name,
+               username: req.body.username,
                password: req.body.password,
                email: req.body.email,
                birthday: req.body.birthday
@@ -302,9 +306,9 @@ app.use(express.static('public'));
         });
     });
 
-    //get a user by name
-    app.get('/users/:name', (req, res) => {
-        Users.findOne({ Name: req.params.name })
+    //get a user by username
+    app.get('/users/:username', (req, res) => {
+        Users.findOne({ username: req.params.username })
            .then((user) => {
              res.json(user);
         })
@@ -319,7 +323,7 @@ app.use(express.static('public'));
     app.put('/users/:email', (req, res) => {
         Users.findByIdAndUpdate({ Email: req.params.email }, {$set:
             {
-                name: req.body.name,
+                username: req.body.username,
                 password: req.body.password,
                 email: req.body.email,
                 birthday: req.body.birthday
@@ -337,8 +341,8 @@ app.use(express.static('public'));
     });
 
     //users to add a movie to their list of favorites
-    app.post('/users/:name/movies/:MovieID', (req, res) => {     
-        Users.findOneAndUpdate({ Name: req.params.name },
+    app.post('/users/:username/movies/:MovieID', (req, res) => {     
+        Users.findOneAndUpdate({ username: req.params.username },
             {
                 $push: { favoriteMovies: req.params.MovieID }
             },
@@ -354,8 +358,8 @@ app.use(express.static('public'));
     });
 
     //User delete movie from fav list
-    app.delete('/users/:name/favouriteMovie/:movieID', (req, res) => {
-        Users.findOneAndUpdate({ Name: req.params.name },
+    app.delete('/users/:username/favouriteMovie/:movieID', (req, res) => {
+        Users.findOneAndUpdate({ username: req.params.username },
             { $pull: { favoriteMovies: req.params.movieID} 
         })
       .then((updatedUser) => {
@@ -368,13 +372,13 @@ app.use(express.static('public'));
       });
 
     //User deleted from api
-    app.delete('/users/:name', (req, res) => {
-        Users.findOneAndRemove({ Name: req.params.name })
+    app.delete('/users/:username', (req, res) => {
+        Users.findOneAndRemove({ username: req.params.username })
             .then((user) => {
                 if (!user) {
-                    res.status(400).send(req.params.name + ' has not been found.');
+                    res.status(400).send(req.params.username + ' has not been found.');
                 } else {
-                    res.status(200).send(req.params.name + ' has been deleted.');
+                    res.status(200).send(req.params.username + ' has been deleted.');
                 }
             })
             .catch((err) => {
@@ -401,7 +405,7 @@ app.use(express.static('public'));
     app.get('/movies/:Title', (req, res) => {
         Movies.find({ Title: req.params.Title }) 
         .then(movie => {
-            console.log('You are searching for a movie named ' + req.params.Title);
+            console.log('You are searching for a movie usernamed ' + req.params.Title);
             if (Object.keys(movie).lenght != 0) 
             res.json(movie)
             else {res.status(400).send(req.params.Title + ' does not exist in our library.')}
@@ -410,9 +414,9 @@ app.use(express.static('public'));
     });
            
 
-   // Return data about a genre (description) by name/title
-   app.get('/movies/genre/:Name', (req, res) => {
-       Movies.findOne({ genreName: req.params.genreName})
+   // Return data about a genre (description) by username/title
+   app.get('/movies/genre/:username', (req, res) => {
+       Movies.findOne({ genreusername: req.params.genreusername})
        .then(movie => {
            Genres.findById(movie.Genre)
            .then(genre => {
@@ -422,9 +426,9 @@ app.use(express.static('public'));
    });
    });
 
-   // Director's name
-    app.get('/movies/director/:Name', (req, res) => {
-        Directors.findOne({ Name: req.params.Name })
+   // Director's username
+    app.get('/movies/director/:username', (req, res) => {
+        Directors.findOne({ username: req.params.username })
         .then((director) => { res.json(director);
         })
         .catch((err) => console.log(err));
@@ -432,7 +436,7 @@ app.use(express.static('public'));
 
     //returns documentation page from static public folder
     app.get('/documentation', (req, res) => {                  
-        res.sendFile(__dirname + '/public/documentation.html');
+        res.sendFile(__dirusername + '/public/documentation.html');
     });
 
      // error message always after other instances(get, post,use) but before listen
