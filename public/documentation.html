@@ -50,11 +50,11 @@
                   Title: string,
                   Description: string,
                   Genre: {
-                     username: string,
+                     Name: string,
                      Description: string,
                     },
                   Director: {
-                      username: string,
+                      Name: string,
                       Bio: string,
                       Birth: string
                     },
@@ -66,16 +66,16 @@
                 </td>
                 </tr>
                  <tr>
-                 <td>Return data about a genre (description) by username/title (e.g., 'Comedy')</td>
-                 <td>/movies/genre/[genreusername]</td>
+                 <td>Return data about a genre (description) by name/title (e.g., 'Comedy')</td>
+                 <td>/movies/genre/[genrename]</td>
                  <td>GET</td>
-                 <td>:genreusername</td>
+                 <td>:genrename</td>
                  <td>None</td>
                  <td>A JSON object holding data about the selected genre. Example:
                   <pre>    
                      <code>
                           {
-                            username: 'Comedy', 
+                            Name: 'Comedy', 
                             Description: ''
                           }
                         </code> 
@@ -92,10 +92,10 @@
                           <pre>
                               <code>
                                   id: 1,
-                                  username: "Maria Manson",
-                                  email: "maria.manson@gmail.com",
-                                  password: "klo788",
-                                  birthday: "1980-01-02",
+                                  Username: "Maria Manson",
+                                  Email: "maria.manson@gmail.com",
+                                  Password: "klo788",
+                                  Birthday: "1980-01-02",
                                   favoriteMovies: [],
                               </code>
                           </pre>
@@ -110,10 +110,10 @@
                           <pre>
                               <code>
                                   { 
-                                      "username": "", 
-                                      "email": "", 
-                                      "password": ""
-                                      "birthday": "", 
+                                      "Username": "", 
+                                      "Email": "", 
+                                      "Password": ""
+                                      "Birthday": "", 
                                       "favoriteMovies": []            
                                   }
                               </code>
