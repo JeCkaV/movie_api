@@ -1,21 +1,45 @@
-    const express = require('express');
-          bodyParser = require('body-parser'),
-          uuid = require('uuid');
+const express = require('express');
+      bodyParser = require('body-parser');
+      uuid = require('uuid');
 
-    const app = express();
+// import built in node modules fs and path 
+const morgan = require('morgan');
+      fs = require('fs'), 
+     path = require('path');
 
-    app.use(bodyParser.json());
-   
-    // import built in node modules fs and path 
-    morgan = require('morgan');
-    fs = require('fs'), 
-    path = require('path');
+      mongoose = require('mongoose');
+      Models = require ('./models');
 
-    
+  //mongoose models
+  const Movies = Models.Movie;
+  const Users = Models.User;
+  const Genres = Models.Genre;
+  const Directors = Models.Director;
 
-    //setting up logging stream
-    const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), 
-    {flags: 'a'});
+  const app = express();
+
+  //connection with Mongo database
+  mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+ extended: true
+}));
+
+ //setting up logging stream with log.txt
+ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), 
+ {flags: 'a'});
+
+  //logging with morgan
+  app.use(morgan('combined', { stream: accessLogStream }));
+
+  app.use(express.json());
+
+// serve static file
+app.use(express.static('public'));
 
     // list of users
 
@@ -75,7 +99,7 @@
             Bio: "Degree in Clinical Psychology and in Film Directing. Author of the 8 feature films and 8 books.",
             Birth: '1963-01-01'
         },
-        Stars: ["Nikola Kojo", "Milena Pavlovic", "Branka Katic", "Srdjan Zika Todorovic"],
+        Stars: ["Nikola Kojo", "Milena Pavlovic", "Branka Katic", "Srdjan Zika Todorovic"] ,
         Genre: {
             Name: "Comedy",
             Description: 'Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect.' ,
@@ -92,7 +116,7 @@
             Bio: 'Serbian screenwriter, producer and director.He gained knowledge and experience working as a first assistant director on feature films, feature series, numerous commercials and dedicated films for clients from Serbia and abroad.',
             Birth: '1978-03-23' 
         },
-        Stars: 'Milos Bikovic', 'Miodrag Radonjic', 'Dragan Bjelogrlic',
+        Stars: [ 'Milos Bikovic', 'Miodrag Radonjic', 'Dragan Bjelogrlic'] ,
         Genre: {
             Name:'Crime',
             Description: 'Crime fiction is the literary genre that fictionalises crimes, their detection, criminals and their motives.'
@@ -109,7 +133,7 @@
             Bio: 'Serbian film and television director and screenwriter. Sotra graduated from the Faculty of Dramatic Arts, University of Arts in Belgrade with a degree in film directing. He began his professional career at TV Belgrade, working there since its inception.',
             Birth:'1933-02-13'
              } ,
-        Stars: ['Vojin Cetkovic', 'Katarina Radivojevic', 'Dragan Nikolic', 'Milena Dravic'],
+        Stars: ['Vojin Cetkovic', 'Katarina Radivojevic', 'Dragan Nikolic', 'Milena Dravic'] ,
         Genre: {
             Name:'Drama',
             Description: 'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
@@ -228,7 +252,7 @@
             Bio: 'Gorcin Stojanovic was born on October 19, 1966 in Sarajevo, Bosnia and Hercegovina, Yugoslavia. He is a director and producer, known for Premeditated Murder (1995), The Hornet (1998) and Tajne vinove loze (2021).',
             Birth: '1966-10-19' ,
         },
-        Stars: ['Mirjana Jokovic', 'Sergej Trifunovic'],
+       
         Genre: {
             Name: 'Drama',
             Description: 'Considered as a genre of poetry in general, the dramatic mode has been contrasted with the epic and the lyrical modes.',
@@ -238,83 +262,129 @@
         },
     ];
 
-    // create new user with post method
-    app.post('/users', (req, res) => {
-        const newUser = req.body;
+    // NOW WE ARE ADDING ENDPOINDS FOR OUR API
 
-        if (newUser.name) {
-            newUser.id = uuid.v4();
-            users.push(newUser);
-            res.status(201).json(newUser)
+    //Allow new user creation with post method
+    app.post ('/users', (req, res) => {
+       Users.findOne({ name: req.body.name })
+       .then ((user) => {
+           if (user) {
+               return res.status(400).send(req.body.name + ' already exists.');
         } else {
-            res.status(400).send('Users need to have names.')
+            Users.create({
+               name: req.body.name,
+               password: req.body.password,
+               email: req.body.email,
+               birthday: req.body.birthday
+            })
+            .then ((user) => {
+                res.status(201).json(user) 
+            }).catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            })
         }
+       }).catch((err) => {
+           console.error(err);
+           res.status(500).send('Error: ' + err);
+       });
     });
 
-    // Update user's details
-    app.put('/users/:id', (req, res) => {
-        const { id } = req.params;
-        const updatedUser = req.body;
+    //GET ALL USERS
+    app.get('/users', (req,res) => {
+        Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+    });
 
-        let user = users.find( user => user.id == id );
+    //get a user by name
+    app.get('/users/:name', (req, res) => {
+        Users.findOne({ Name: req.params.name })
+           .then((user) => {
+             res.json(user);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+    });
 
-        if (user) {
-            user.name = updatedUser.name;
-            res.status(200).json(user);
-        } else {
-            res.status(400).send('User not found.')
-        }
+
+    // Update user's details as email
+    app.put('/users/:email', (req, res) => {
+        Users.findByIdAndUpdate({ Email: req.params.email }, {$set:
+            {
+                name: req.body.name,
+                password: req.body.password,
+                email: req.body.email,
+                birthday: req.body.birthday
+            }
+        },
+        { new: true }, // This line makes sure that the updated document is returned
+        (err, updatedUser) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                res.json(updatedUser);
+            }
+        });
     });
 
     //users to add a movie to their list of favorites
-    app.post('/users/:id/:movieTitle', (req, res) => {
-        const { id, movieTitle } = req.params;
-
-        let user = users.find( user => user.id == id );
-
-        if (user) {
-            user.favoriteMovies.push(movieTitle);
-            res.status(200).json(`${movieTitle} has been added to user ${id}'s array`);
-        } else {
-            res.status(400).send('User not found.')
-        }
+    app.post('/users/:name/movies/:MovieID', (req, res) => {     
+        Users.findOneAndUpdate({ Name: req.params.name },
+            {
+                $push: { favoriteMovies: req.params.MovieID }
+            },
+            { new: true},
+            (err, updatedUser) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Error: ' + err);
+                } else {
+                    res.json(updatedUser);
+                }
+            });
     });
 
-    //User delete movie
-    app.delete('/users/:id/:movieTitle', (req, res) => {
-        const { id, movieTitle } = req.params;
+    //User delete movie from fav list
+    app.delete('/users/:name/favouriteMovie/:movieID', (req, res) => {
+        Users.findOneAndUpdate({ Name: req.params.name },
+            { $pull: { favoriteMovies: req.params.movieID} 
+        })
+      .then((updatedUser) => {
+          Movies.findOne({ _id: req.params.movieID }).then((movie) => {
+           res.send('The movie \'' + movie.Title + '\' has been successfully removed from your list of favourites.');
+    })
+    }) .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
 
-        let user = users.find( user => user.id == id );
-
-        if (user) {
-            user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
-            res.status(200).json(`${movieTitle} has been removed from user ${id}'s array`);
-        } else {
-            res.status(400).send('User not found.')
-        }
+    //User deleted from api
+    app.delete('/users/:name', (req, res) => {
+        Users.findOneAndRemove({ Name: req.params.name })
+            .then((user) => {
+                if (!user) {
+                    res.status(400).send(req.params.name + ' has not been found.');
+                } else {
+                    res.status(200).send(req.params.name + ' has been deleted.');
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
     });
+});
 
-    //User delete movie
-    app.delete('/users/:id', (req, res) => {
-        const { id } = req.params;
-
-        let user = users.find( user => user.id == id );
-
-        if (user) {
-            users = users.filter( user => user.id != id);
-            res.status(200).send(`User with ${id} has been deleted.`);
-        } else {
-            res.status(400).send('User not found.')
-        }
-    });
-
-
-
-    // serve static file
-    app.use(express.static('public'));
-    //logging with morgan
-    app.use(morgan('combined', { stream: accessLogStream }));
-
+    //Read functions
 
     // GET requests
     app.get('/', (req, res) => {
@@ -323,57 +393,44 @@
     
     //Return a list of ALL movies
     app.get('/movies', (req, res) => {
-        res.status(200).json(movies);
+        Movies.find()
+        .then(movies => res.json(movies));
     });
 
-    //Read functions
+    // Single movie by title
+    app.get('/movies/:Title', (req, res) => {
+        Movies.find({ Title: req.params.Title }) 
+        .then(movie => {
+            console.log('You are searching for a movie named ' + req.params.Title);
+            if (Object.keys(movie).lenght != 0) 
+            res.json(movie)
+            else {res.status(400).send(req.params.Title + ' does not exist in our library.')}
+        })
+        .catch((err) => res.status(500));
+    });
+           
 
-    // SIngle movie by title
-    
-    app.get('/movies/:title', (req, res) => {
-        const { title } = req.params;
-        const movie = movies.find( movie => movie.Title === title );
-
-        if (movie) {
-           res.status(200).json(movie);
-        } else {
-            res.status(404).send('Sorry, there is no requested movie on the list.')
-        }
+   // Return data about a genre (description) by name/title
+   app.get('/movies/genre/:Name', (req, res) => {
+       Movies.findOne({ genreName: req.params.genreName})
+       .then(movie => {
+           Genres.findById(movie.Genre)
+           .then(genre => {
+               res.status(200).json(genre);
+           })
+           .catch((err) => console.error(err));
+   });
    });
 
-   // Genre name
-   app.get('/movies/genre/:genreName', (req, res) => {
-    const { genreName } = req.params;
-    const genre = movies.find( movie => movie.Genre.Name === genreName ).Genre;
-
-    if (genre) {
-       res.status(200).json(genre);
-    } else {
-        res.status(404).send('Sorry, there is no requested genre.')
-    }
-});
-
-   // Director name
-    app.get('/movies/director/:directorName', (req, res) => {
-      const { directorName } = req.params;
-      const director = movies.find( movie => movie.Director.Name === directorName ).Director;
-
-    if (director) {
-       res.status(200).json(director);
-    } else {
-        res.status(404).send('Sorry, there is no requested director.')
-    }
-});
-
-
-
-
-
-
-
+   // Director's name
+    app.get('/movies/director/:Name', (req, res) => {
+        Directors.findOne({ Name: req.params.Name })
+        .then((director) => { res.json(director);
+        })
+        .catch((err) => console.log(err));
+    });
 
     //returns documentation page from static public folder
-
     app.get('/documentation', (req, res) => {                  
         res.sendFile(__dirname + '/public/documentation.html');
     });
