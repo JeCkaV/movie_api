@@ -16,12 +16,12 @@
   require('./passport');
 
 // import built in node modules fs and path 
-const morgan = require('morgan');
-  fs = require('fs'), 
-  path = require('path');
+  const morgan = require('morgan');
+        fs = require('fs'), 
+        path = require('path');
 
-  mongoose = require('mongoose');
-  Models = require ('./models');
+        mongoose = require('mongoose');
+        Models = require ('./models');
 
 //mongoose models
 const Movies = Models.Movie;
@@ -36,7 +36,7 @@ useUnifiedTopology: true,
 });
 
 //setting up logging stream with log.txt
-const accessLogStream = fs.createWriteStream(path.join(__dirUsername, 'log.txt'), 
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), 
 {flags: 'a'});
 
 //logging with morgan
