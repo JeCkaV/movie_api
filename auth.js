@@ -1,6 +1,5 @@
 const jwtSecret = 'your_jwt_secret'; 
 
-const res = require('express/lib/response');
 const jwt = require('jsonwebtoken'),
       passport = require ('passport');
 
