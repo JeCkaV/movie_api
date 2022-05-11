@@ -20,8 +20,8 @@ let Users = Models.User,
 
         if (!user) {
             console.log('incorrect Username');
-            return callback(null, false, {message> 'Incorrect Username or Password'});
-        },
+            return callback(null, false, {message: 'Incorrect Username or Password'});
+        }
         console.log('finished');
         return callback(null, user)
         });

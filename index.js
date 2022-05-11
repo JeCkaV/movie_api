@@ -1,6 +1,6 @@
  const express = require('express');
      
-  app.use(express.json());
+  // app.use(express.json());
   bodyParser = require('body-parser');
   uuid = require('uuid');
 
@@ -49,7 +49,6 @@ app.use(express.static('public'));
 
     let users = [
         {
-          id: _1,
           Username: "Maria Manson",
           Password: 'klo788',
           Email: "maria.manson@gmail.com",
@@ -58,7 +57,6 @@ app.use(express.static('public'));
         },
         
         {
-          id: _2,
           Username: "Ana Smith",
           Password: 'ups88',
           Email: "ana.smitt@yahoo.com",
@@ -67,7 +65,6 @@ app.use(express.static('public'));
         },
 
         {
-            id: _3,
             Username: "Melani Cruz",
             Password: 'upsmc5588',
             Email: 'melc@yahoo.com' ,
@@ -75,7 +72,6 @@ app.use(express.static('public'));
             favoriteMovies: ["We are not angels"],
           },
           {
-            id = _4 ,
             Username: "Fiona Cruz",
             Password: "ups88",
             Email: 'fcruz@yahoo.com' ,
@@ -84,7 +80,6 @@ app.use(express.static('public'));
           },
 
           {
-            id = _5 ,
             Username: "David Beckham",
             Password: "beckhampower55",
             Email: 'davidb@yahoo.com' ,
@@ -432,7 +427,7 @@ app.use(express.static('public'));
    });
    });
 
-   // Director's name
+   // Directors name
     app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
         Directors.findOne({ Name: req.params.Name })
         .then((director) => { res.json(director);
