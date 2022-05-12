@@ -98,9 +98,9 @@ app.use(express.static('public'));
     });
 
 
-    // Update user's details as Email
-    app.put('/users/:Email', (req, res) => {
-        Users.findByIdAndUpdate({ Email: req.params.Email }, {$set:
+    // Update user's details as Password
+    app.put('/users/:Username', (req, res) => {
+        Users.findOneAndUpdate ({ Password: req.params.Password }, {$set:
             {
                 Username: req.body.Username,
                 Password: req.body.Password,
