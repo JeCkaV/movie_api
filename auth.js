@@ -17,7 +17,9 @@ const jwt = require('jsonwebtoken'),
 
       module.exports = (router) => {
           router.post('/login', (req, res) => {
+              console.log(req.body)
               passport.authenticate('local', { session: false }, (error, user, info) => {
+                  console.log("This is from auth.js", user)
                   if (error || !user) {
                       return res.status(400).json( {
                           message: 'Something is not right',
