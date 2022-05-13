@@ -119,6 +119,37 @@
                               </code>
                           </pre>
                       </td>
+
+                      <tr>
+                        <td>Allow a user to login</td>
+                        <td>
+                            /login<br><br>
+                            Params: (Username, Password)    
+                        </td>
+                        <td>POST</td>
+                        <td>None</td>
+                        <td>
+                            A JSON object holding the users information as well as an assigned JWT<br><br>
+                            Example:<br>
+                            <pre>
+                                <code>
+        {
+            "user": {
+              "_id": "627cf25ce39aa00052caa537",
+              "Username": "AnaSm",
+              "Password": "ups88",
+              "Email": "ana.smitt@yahoo.com",
+              "Birthday": "1988-02-05T00:00:00.000Z",
+              "FavoriteMovies": [],
+              "__v": 0
+          }, 
+            "token": "gthujko..."
+        }
+                                </code>
+                            </pre>
+                        </td>
+        
+                    </tr>
                       <tr>
                           <td>Allow users to update their user info</td>
                           <td>/users/[username]</td>
