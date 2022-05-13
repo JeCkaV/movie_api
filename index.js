@@ -7,12 +7,15 @@
   const app = express();
 
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
+  app.use(
+      bodyParser.urlencoded({
       extended: true
   }));
 
   const passport = require('passport');
   require('./passport');
+  const cors =require('cors');
+  app.use(cors());
   let auth = require('./auth')(app);
   
 
@@ -23,19 +26,22 @@
         mongoose = require('mongoose');
         Models = require ('./models');
 
+ const { check, validationResult } = require('express-validator');
+
 //mongoose models
 const Movies = Models.Movie;
 const Users = Models.User;
 
 //connection with Mongo database
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
-useNewUrlParser: true, 
-useUnifiedTopology: true,
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
 });
 
 //setting up logging stream with log.txt
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), 
-{flags: 'a'});
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+    flags: 'a',
+});
 
 //logging with morgan
 app.use(morgan('combined', { stream: accessLogStream }));
@@ -46,10 +52,26 @@ app.use(express.static('public'));
     //ADDING ENDPOINDS FOR OUR API
 
     //Allow new user registration with post method
-    app.post ('/users', (req, res) => {
+    app.post ('/users', 
+    //Validation: all fields required and not empty, email validation, username is alphanumeric and min 6 lenght,
+    [
+        check('Username', 'Username is required').isLength({min: 6}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+      ],
+    (req, res) => {
+        let errors = validationResult(req);
+
+        if(!errors.isEmpty()) {
+            return res.status(442).json({ errors: errors.array()});
+        }
+
+      let hashedPassword = Users.hashPassword(req.body.Password);
        Users.findOne({ Username: req.body.Username })
        .then ((user) => {
            if (user) {
+               //If the user is found, send a response that it already exists
                return res.status(400).send(req.body.Username + ' already exists.');
         } else {
             Users.create({
@@ -58,16 +80,15 @@ app.use(express.static('public'));
                Email: req.body.Email,
                Birthday: req.body.Birthday
             })
-            .then ((user) => {
-                res.status(201).json(user) 
-            }).catch((err) => {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            })
+            .then ((user) => { res.status(201).json(user) })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            });
         }
-       }).catch((err) => {
-           console.error(err);
-           res.status(500).send('Error: ' + err);
+       }).catch((errpr) => {
+           console.error(error);
+           res.status(500).send('Error: ' + error);
        });
     });
 
@@ -97,14 +118,29 @@ app.use(express.static('public'));
 
 
     // Update user's details as Password
-    app.put('/users/:Username', passport.authenticate("jwt", { session: false }), (req, res) => {
-        Users.findOneAndUpdate ({ Username: req.params.Username }, {$set:
+    app.put('/users/:Username', passport.authenticate("jwt", { session: false }), 
+    [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+      ],
+    (req, res) => {
+        let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    
+    Users.findOneAndUpdate ({ Username: req.params.Username }, 
             {
+                $set: {
                 Username: req.body.Username,
                 Password: req.body.Password,
                 Email: req.body.Email,
-                Birthday: req.body.Birthday
-            }
+                Birthday: req.body.Birthday,
+            },
         },
         { new: true }, // This line makes sure that the updated document is returned
         (err, updatedUser) => {
@@ -146,9 +182,7 @@ app.use(express.static('public'));
           Movies.findOne({ _id: req.params.movieID }).then((movie) => {
             res.json({
               message:
-                "The movie '" +
-                movie.Title +
-                "' has been successfully removed from your list of favourites.",
+                "The movie '" + movie.Title + "' has been successfully removed from your list of favourites.",
               user: updatedUser,
             });
           });
@@ -159,7 +193,6 @@ app.use(express.static('public'));
         });
     }
   );
-  
 
     //User deleted from api
     app.delete('/users/:Username',passport.authenticate("jwt", { session: false }), (req, res) => {
@@ -202,7 +235,7 @@ app.use(express.static('public'));
         .then(movie => {
             console.log('You are searching for a movie named ' + req.params.Title);
             if (Object.keys(movie).lenght != 0) 
-            res.json(movie)
+            res.json(movie);
             else {res.status(400).send(req.params.Title + ' does not exist in our library.')}
         })
         .catch((err) => res.status(500));
@@ -211,7 +244,7 @@ app.use(express.static('public'));
 
    // Return data about a genre (description) by name/title
    app.get('/movies/genre/:Name', passport.authenticate('jwt', { session: false }),  (req, res) => {
-       Movies.findOne({ "GenreName": req.params.Name})
+       Movies.findOne({ "Genre.Name": req.params.Name})
        .then(movie => {
         if (!movie) return res.status(404).send('Genre ${req.params.Name} has not been found.');
                res.status(200).json(movie);
@@ -221,7 +254,7 @@ app.use(express.static('public'));
 
    // Directors name
     app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
-        Movies.findOne({ "DirectorName" : req.params.Name })
+        Movies.findOne({ "Director.Name" : req.params.Name })
         .then((movie) => {
             if (!movie) return res.status(404).send('Director ${req.params.Name} has not been found.');
             res.json(movie);
@@ -241,6 +274,7 @@ app.use(express.static('public'));
     });
 
     // listen for requests
-    app.listen(8080, () => {
-        console.log('Your app is listening on port 8080.');
+    const port = process.env.PORT || 8080;
+    app.listen(port, '0.0.0.0',() => {
+     console.log('Listening on Port ' + port);
     });
