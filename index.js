@@ -27,16 +27,22 @@
         Models = require ('./models');
 
  const { check, validationResult } = require('express-validator');
+const { default: mongoose } = require('mongoose');
 
 //mongoose models
 const Movies = Models.Movie;
 const Users = Models.User;
 
 //connection with Mongo database
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
-});
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
+   // useNewUrlParser: true, 
+  ///  useUnifiedTopology: true,
+//});
+
+mongoose.connect( process.env.CONNECTION_URI, 
+    { useNewUrlParser: true, 
+      useUnifiedTopology: true 
+    });
 
 //setting up logging stream with log.txt
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
