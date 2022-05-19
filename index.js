@@ -23,23 +23,23 @@
   const morgan = require('morgan');
         (fs = require('fs')), (path = require('path'));
 
-        mongoose = require('mongoose');
-        Models = require ('./models');
+const mongoose = require('mongoose');
+const Models = require ('./models');
 
  const { check, validationResult } = require('express-validator');
-const { default: mongoose } = require('mongoose');
+// const { default: mongoose } = require('mongoose');
 
 //mongoose models
 const Movies = Models.Movie;
 const Users = Models.User;
 
 //connection with Mongo database
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
-   // useNewUrlParser: true, 
-  ///  useUnifiedTopology: true,
-//});
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { 
+//    useNewUrlParser: true, 
+//    useUnifiedTopology: true,
+// });
 
-mongoose.connect( process.env.CONNECTION_URI, 
+mongoose.connect(process.env.CONNECTION_URI, 
     { useNewUrlParser: true, 
       useUnifiedTopology: true 
     });
@@ -73,7 +73,7 @@ app.use(express.static('public'));
             return res.status(442).json({ errors: errors.array()});
         }
 
-      let hashedPassword = Users.hashPassword(req.body.Password);
+      const hashedPassword = Users.hashPassword(req.body.Password);
        Users.findOne({ Username: req.body.Username })
        .then ((user) => {
            if (user) {
@@ -82,7 +82,7 @@ app.use(express.static('public'));
         } else {
             Users.create({
                Username: req.body.Username,
-               Password: req.body.Password,
+               Password: hashedPassword,
                Email: req.body.Email,
                Birthday: req.body.Birthday
             })
@@ -143,7 +143,7 @@ app.use(express.static('public'));
             {
                 $set: {
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday,
             },
