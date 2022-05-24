@@ -8,15 +8,15 @@ const Genres = Models.Genre;
 
 require('../passport');
 
-//passport.authenticate('jwt', { session: false }),
+
 //Return a list of ALL movies to the user
-router.get('/', (req, res) => {
-    Movies.find()
-        .then((movies) => res.json(movies))
-        .catch((err) => {
-            console.error(err);
-        });
-});
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+        Movies.find()
+            .then((movies) => res.json(movies))
+            .catch((err) => {
+                console.error(err);
+            });
+    });
 
 //Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by id
 router.get('/:movie_id', (req, res) => {
