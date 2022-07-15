@@ -98,49 +98,24 @@ router.route('/:username')
             }));
     });
 
-// Allow users to update their user info (username, password, email, date of birth)
-router.put(
-    "/:user_id",
-    [
-      check("Username", "Username is required").isLength({ min: 5 }),
-      check(
-        "Username",
-        "Username contains non alphanumeric characters - not allowed."
-      ).isAlphanumeric(),
-      check("Password", "Password is required").not().isEmpty(),
-      check("Email", "Email does not appear to be valid").isEmail(),
-    ],
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-      // check the validation object for errors
-      let errors = validationResult(req);
-  
-      if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
-      }
-      let hashedPassword = Users.hashPassword(req.body.Password);
-      Users.findByIdAndUpdate(
-        { _id: req.params.user_id },
-        {
-          $set: {
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday,
-          },
-        },
-        { new: true }, // return the updated document
-        (err, updatedUser) => {
-          if (err) {
-            console.error(err);
-            res.status(500).send("Error: " + err);
-          } else {
-            res.json(updatedUser);
-          }
+///Allow users to update their user info (username)
+router.put('/:username/:newUsername', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.findOne({ Username: req.params.username }).then((user) => {
+        if (!user) {
+            return res.status(400).send("The user " + req.params.username + " doesn't exists.");
+        } else {
+            user.updateOne({ Username: req.params.newUsername }).then((user) => {
+                res.status(201).json(user)
+            }).catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            })
         }
-      );
-    }
-  );
+    }).catch((err) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+    });
+});
 
 
 router.route('/:username/favs/:movieID')
