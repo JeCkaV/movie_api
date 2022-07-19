@@ -119,8 +119,8 @@ router.put(
         return res.status(422).json({ errors: errors.array() });
       }
       let hashedPassword = Users.hashPassword(req.body.Password);
-      Users.findByIdAndUpdate(
-        { _id: req.params.user_id },
+      Users.findOneAndUpdate(
+        { Username: req.params.user_id },
         {
           $set: {
             Username: req.body.Username,
@@ -151,7 +151,7 @@ router.route('/:username/favs/:movieID')
                     console.error(err);
                     res.status(500).send('Error ' + err);
                 } else {
-                    res.send('Movie added to your favourite list')
+                    res.send('Movie added to your favorite list')
                 }
             });
     })
@@ -160,7 +160,7 @@ router.route('/:username/favs/:movieID')
         Users.findOneAndUpdate({ Username: req.params.username }, { $pull: { FavoriteMovies: req.params.movieID } })
             .then((updatedUser) => {
                 Movies.findOne({ _id: req.params.movieID }).then((movie => {
-                    res.send('The movie \'' + movie.Title + '\' has been removed from your favourite list.');
+                    res.send('The movie \'' + movie.Title + '\' has been removed from your favorite list.');
                 }))
             }).catch((err) => {
                 console.error(err);
